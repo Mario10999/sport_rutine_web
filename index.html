@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rutina Muscular en Casa 💪</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #0a0a0a;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #f0f0f0;
+      padding-bottom: 2rem;
+    }
+
+    /* HEADER */
+    #header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(10,10,10,0.94);
+      border-bottom: 1px solid #ffffff10;
+      padding: 1.5rem 1.5rem 1.2rem;
+      backdrop-filter: blur(12px);
+    }
+    #header-inner { max-width: 600px; margin: 0 auto; }
+    #header-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #555;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    #header-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    #header-sub { font-size: 12px; color: #777; }
+
+    /* WEEK NAV */
+    #week-nav {
+      max-width: 600px;
+      margin: 1.2rem auto 0;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 6px;
+    }
+    .day-btn {
+      flex: 1;
+      padding: 10px 4px;
+      border-radius: 12px;
+      border: 2px solid #ffffff10;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .day-btn.rest { color: #333; cursor: default; }
+    .day-btn .day-name { font-size: 10px; color: #888; margin-bottom: 4px; }
+    .day-btn.rest .day-name { color: #333; }
+    .day-dot { width: 6px; height: 6px; border-radius: 50%; margin: 0 auto; }
+    .day-rest-label { font-size: 8px; color: #333; }
+
+    /* EXERCISE LIST */
+    #exercise-list {
+      max-width: 600px;
+      margin: 1rem auto 0;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* EXERCISE CARD */
+    .ex-card {
+      background: #141414;
+      border: 1px solid #ffffff0f;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .ex-card.done { }
+
+    .ex-header {
+      width: 100%;
+      padding: 16px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: inherit;
+    }
+    .ex-num {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    .ex-info { flex: 1; }
+    .ex-name { font-weight: 700; font-size: 15px; color: #f0f0f0; margin-bottom: 2px; transition: color 0.3s; }
+    .ex-sets { font-size: 12px; color: #666; }
+    .ex-arrow { color: #444; font-size: 18px; transition: transform 0.3s; display: inline-block; }
+    .ex-arrow.open { transform: rotate(180deg); }
+
+    /* EXPANDED CONTENT */
+    .ex-body { padding: 0 16px 16px; display: none; }
+    .ex-body.open { display: block; }
+
+    .muscle-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 12px; letter-spacing: 0.5px;
+    }
+    .section-label {
+      font-size: 10px; color: #555;
+      text-transform: uppercase; letter-spacing: 1px;
+      font-weight: 600; margin-bottom: 4px;
+    }
+    .how-text { font-size: 14px; color: #ccc; line-height: 1.6; margin-bottom: 12px; }
+
+    .tip-box {
+      background: #1a1a1a;
+      border: 1px solid #ffffff08;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      font-size: 13px; color: #bbb; line-height: 1.5;
+    }
+
+    .sets-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .set-btn {
+      padding: 8px 16px; border-radius: 8px;
+      border: 1.5px solid #333;
+      background: transparent; color: #555;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .set-btn.done-set { color: #000; }
+
+    .rest-pill {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: #0f0f0f; border-radius: 8px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; color: #777;
+    }
+
+    /* TIPS CARD */
+    #tips-card {
+      max-width: 600px; margin: 10px auto 0;
+      padding: 0 1.5rem;
+    }
+    .tips-inner {
+      background: #111; border: 1px solid #ffffff08;
+      border-radius: 16px; padding: 16px;
+    }
+    .tips-title {
+      font-size: 11px; color: #555;
+      text-transform: uppercase; letter-spacing: 1px;
+      font-weight: 700; margin-bottom: 10px;
+    }
+    .tip-line { font-size: 13px; color: #888; line-height: 1.5; margin: 6px 0; }
+    .tip-arrow { margin-right: 6px; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div id="header-inner">
+    <p id="header-label">RUTINA MUSCULAR EN CASA</p>
+    <h1 id="header-title"></h1>
+    <p id="header-sub"></p>
+  </div>
+</div>
+
+<!-- WEEK NAV -->
+<div id="week-nav"></div>
+
+<!-- EXERCISE LIST -->
+<div id="exercise-list"></div>
+
+<!-- TIPS -->
+<div id="tips-card">
+  <div class="tips-inner">
+    <p class="tips-title">📋 REGLAS DE ORO</p>
+    <p class="tip-line"><span class="tip-arrow" id="ta1">→</span>Calienta 5-10 min antes (marcha, círculos de brazos, rodillas al pecho)</p>
+    <p class="tip-line"><span class="tip-arrow" id="ta2">→</span>Si sientes dolor articular (no el ardor muscular), para el ejercicio</p>
+    <p class="tip-line"><span class="tip-arrow" id="ta3">→</span>Duerme 7-8 horas: el músculo crece mientras descansas</p>
+    <p class="tip-line"><span class="tip-arrow" id="ta4">→</span>Come proteína en cada comida: huevo, pollo, legumbres, lácteos</p>
+    <p class="tip-line"><span class="tip-arrow" id="ta5">→</span>Miércoles y Domingo son de descanso activo (camina, estira)</p>
+  </div>
+</div>
+
+<script>
+const days = [
+  {
+    name: "Día 1", focus: "Pecho & Tríceps", color: "#FF6B35", emoji: "💪",
+    exercises: [
+      { name: "Flexiones (Push-ups)", sets: "4 series × 10-15 reps", rest: "60 seg descanso", muscle: "Pecho, tríceps, hombros",
+        how: "Apoya las manos en el suelo un poco más separadas que los hombros. El cuerpo forma una línea recta de la cabeza a los talones. Baja el pecho casi hasta tocar el suelo doblando los codos, luego empuja hacia arriba. Si es muy difícil, apoya las rodillas.",
+        tip: "🔑 Mantén el abdomen tenso todo el tiempo para proteger la espalda baja." },
+      { name: "Press con Mancuernas (Suelo)", sets: "4 series × 10-12 reps", rest: "75 seg descanso", muscle: "Pecho, tríceps",
+        how: "Túmbate boca arriba en el suelo con las rodillas dobladas. Sostén una mancuerna en cada mano a la altura del pecho, codos a 45°. Empuja las mancuernas hacia arriba hasta estirar los brazos, luego baja despacio.",
+        tip: "🔑 Baja lento (2-3 segundos) para trabajar más el músculo." },
+      { name: "Apertura con Mancuernas (Fly)", sets: "3 series × 12 reps", rest: "60 seg descanso", muscle: "Pecho interior",
+        how: "Mismo punto de partida que el press. Abre los brazos a los lados con los codos ligeramente doblados (como si abrazaras un árbol gigante), luego ciérralos arriba juntando las mancuernas. Siente el estiramiento en el pecho.",
+        tip: "🔑 Usa menos peso que en el press. El control importa más que la carga." },
+      { name: "Extensiones de Tríceps con Mancuerna", sets: "3 series × 12-15 reps", rest: "60 seg descanso", muscle: "Tríceps",
+        how: "De pie o sentado, sostén UNA mancuerna con ambas manos por encima de la cabeza. Dobla los codos bajando la mancuerna por detrás de la cabeza, luego estira los brazos hacia arriba. El codo no debe moverse.",
+        tip: "🔑 Mantén los codos pegados a la cabeza para aislar el tríceps." },
+      { name: "Dips entre Sillas", sets: "3 series × 8-12 reps", rest: "60 seg descanso", muscle: "Tríceps, hombros",
+        how: "Pon dos sillas estables a tus lados. Apoya las manos en los bordes con los dedos mirando hacia adelante. Baja el cuerpo doblando los codos hasta que formen 90°, luego empuja hacia arriba. Las piernas estiradas lo hace más difícil; dobladas, más fácil.",
+        tip: "🔑 No bajes demasiado, para en 90° para no sobrecargar el hombro." },
+    ]
+  },
+  {
+    name: "Día 2", focus: "Espalda & Bíceps", color: "#4ECDC4", emoji: "🦾",
+    exercises: [
+      { name: "Remo con Mancuerna (1 brazo)", sets: "4 series × 10-12 reps cada lado", rest: "60 seg descanso", muscle: "Espalda, bíceps",
+        how: "Apoya una rodilla y una mano en una silla o cama. Con la otra mano sostén la mancuerna colgando. Tira del codo hacia arriba y hacia atrás como si quisieras meter la mano al bolsillo. La espalda debe estar paralela al suelo.",
+        tip: "🔑 Piensa en 'jalar con el codo', no con la mano. Así trabajas la espalda." },
+      { name: "Superman", sets: "3 series × 15 reps", rest: "45 seg descanso", muscle: "Espalda baja, glúteos",
+        how: "Túmbate boca abajo con los brazos estirados al frente. Levanta simultáneamente brazos, pecho y piernas del suelo como si volaras. Mantén 2 segundos arriba y baja despacio.",
+        tip: "🔑 No fuerces el cuello. Mira al suelo, no al frente." },
+      { name: "Curl de Bíceps con Mancuernas", sets: "4 series × 10-12 reps", rest: "60 seg descanso", muscle: "Bíceps",
+        how: "De pie, sostén una mancuerna en cada mano con las palmas mirando al frente. Dobla los codos subiendo las mancuernas hacia los hombros. Baja despacio sin dejar caer los brazos del todo.",
+        tip: "🔑 No balancees el torso. Si lo haces, el peso es demasiado heavy." },
+      { name: "Curl Martillo", sets: "3 series × 12 reps", rest: "60 seg descanso", muscle: "Bíceps, antebrazo",
+        how: "Igual que el curl normal pero las palmas miran hacia dentro (como si sostuvieras un martillo). Este agarre trabaja más el antebrazo y la parte exterior del bíceps.",
+        tip: "🔑 Alterna brazos para mayor control y concentración." },
+      { name: "Remo Invertido con Mesa", sets: "3 series × 10-12 reps", rest: "60 seg descanso", muscle: "Espalda alta, bíceps",
+        how: "Túmbate bajo una mesa resistente, agarra el borde con ambas manos. El cuerpo queda como una tabla inclinada. Jala el pecho hacia la mesa doblando los codos. Es como una dominada pero horizontal.",
+        tip: "🔑 Asegúrate de que la mesa es estable antes de empezar." },
+    ]
+  },
+  {
+    name: "Día 3", focus: "Piernas & Glúteos", color: "#A855F7", emoji: "🦵",
+    exercises: [
+      { name: "Sentadillas con Mancuernas (Goblet Squat)", sets: "4 series × 12-15 reps", rest: "75 seg descanso", muscle: "Cuádriceps, glúteos, isquios",
+        how: "Sostén una mancuerna verticalmente con ambas manos frente al pecho. Pies separados al ancho de hombros, ligeramente apuntando afuera. Baja como si te fueras a sentar en una silla, rodillas alineadas con los pies. Baja hasta que los muslos estén paralelos al suelo.",
+        tip: "🔑 Talones siempre en el suelo. Si se levantan, abre más los pies." },
+      { name: "Zancadas (Lunges)", sets: "3 series × 10 reps cada pierna", rest: "60 seg descanso", muscle: "Cuádriceps, glúteos",
+        how: "De pie, da un paso largo al frente. Baja la rodilla trasera casi hasta el suelo (sin tocarlo). La rodilla delantera no debe pasar la punta del pie. Empuja con el talón delantero para volver arriba.",
+        tip: "🔑 Mira al frente, no al suelo. El torso recto es clave para el equilibrio." },
+      { name: "Peso Muerto Rumano con Mancuernas", sets: "4 series × 10-12 reps", rest: "75 seg descanso", muscle: "Isquiotibiales, glúteos, espalda baja",
+        how: "De pie con mancuernas frente a los muslos. Sin doblar las rodillas más de un poco, inclina el torso hacia adelante empujando las caderas hacia atrás. Siente el estiramiento en la parte trasera de los muslos. Vuelve arriba apretando los glúteos.",
+        tip: "🔑 La espalda SIEMPRE recta. Si la redondeas, paras y reduces el peso." },
+      { name: "Puente de Glúteos (Hip Thrust)", sets: "4 series × 15 reps", rest: "60 seg descanso", muscle: "Glúteos, isquios",
+        how: "Túmbate boca arriba, rodillas dobladas, pies apoyados en el suelo. Sube las caderas hacia el techo apretando los glúteos al máximo. Aguanta 1 segundo arriba. Puedes poner una mancuerna sobre las caderas para más resistencia.",
+        tip: "🔑 En el punto más alto, las rodillas, caderas y hombros deben formar una línea." },
+      { name: "Elevaciones de Gemelo", sets: "3 series × 20 reps", rest: "45 seg descanso", muscle: "Gemelos (pantorrillas)",
+        how: "De pie, apoya los dedos del pie en un escalón o libro grueso. Sube de puntillas lo más alto posible, aguanta 1 segundo, y baja lento hasta que el talón quede por debajo del escalón. Sostén una mancuerna para más dificultad.",
+        tip: "🔑 El movimiento lento hacia abajo es donde más crece el músculo." },
+    ]
+  },
+  {
+    name: "Día 4", focus: "Hombros & Core", color: "#F59E0B", emoji: "🎯",
+    exercises: [
+      { name: "Press de Hombros con Mancuernas", sets: "4 series × 10-12 reps", rest: "75 seg descanso", muscle: "Hombros, tríceps",
+        how: "Sentado o de pie, sostén las mancuernas a la altura de las orejas con los codos a 90°. Empuja hacia arriba hasta casi estirar los brazos, luego baja controlado. No bloquees los codos arriba.",
+        tip: "🔑 No arquees la espalda al subir. Si lo haces, baja el peso." },
+      { name: "Elevaciones Laterales", sets: "3 series × 12-15 reps", rest: "60 seg descanso", muscle: "Deltoides lateral (hombro ancho)",
+        how: "De pie, mancuernas a los lados. Levanta los brazos hacia los lados hasta la altura de los hombros con los codos ligeramente doblados. Imagina que viertes agua de una jarra: el dedo meñique queda más arriba que el pulgar.",
+        tip: "🔑 Baja MUY lento (3-4 segundos). Aquí está el trabajo real." },
+      { name: "Plancha", sets: "3 series × 30-45 segundos", rest: "45 seg descanso", muscle: "Core, abdomen, espalda",
+        how: "Apoya los antebrazos y los dedos de los pies. El cuerpo forma una línea recta. Mete el ombligo hacia adentro y aprieta el abdomen y glúteos. Respira normal.",
+        tip: "🔑 Calidad sobre tiempo. 20 segundos bien hechos > 60 segundos mal hechos." },
+      { name: "Crunch de Bicicleta", sets: "3 series × 20 reps (10 cada lado)", rest: "45 seg descanso", muscle: "Abdomen, oblicuos",
+        how: "Túmbate boca arriba, manos detrás de la cabeza. Lleva el codo derecho hacia la rodilla izquierda mientras estiras la pierna derecha. Alterna los lados como si pedalaras. No jales el cuello con las manos.",
+        tip: "🔑 El movimiento viene de la rotación del torso, no de mover el cuello." },
+      { name: "Elevaciones de Piernas (en el suelo)", sets: "3 series × 12-15 reps", rest: "45 seg descanso", muscle: "Abdomen inferior",
+        how: "Túmbate boca arriba con las piernas estiradas. Sube las piernas hasta 90° sin doblarlas (o dobladas si es muy difícil). Baja lento sin que los talones toquen el suelo.",
+        tip: "🔑 La parte baja de la espalda debe mantenerse pegada al suelo siempre." },
+    ]
+  },
+  {
+    name: "Día 5", focus: "Full Body + Cardio", color: "#EF4444", emoji: "🔥",
+    exercises: [
+      { name: "Burpees", sets: "3 series × 8-10 reps", rest: "75 seg descanso", muscle: "Todo el cuerpo + cardio",
+        how: "De pie → agáchate y apoya las manos → salta los pies atrás (posición de flexión) → haz una flexión (opcional) → salta los pies hacia las manos → salta hacia arriba con los brazos al aire. Es un movimiento fluido.",
+        tip: "🔑 Si es muy intenso, quita el salto y simplemente sube de pie." },
+      { name: "Sentadilla + Press (Thruster)", sets: "3 series × 10 reps", rest: "75 seg descanso", muscle: "Piernas, hombros, core",
+        how: "Con mancuernas a la altura de los hombros, haz una sentadilla. Al subir, aprovecha el impulso para empujar las mancuernas arriba. Es como combinar una sentadilla y un press de hombros en un solo movimiento.",
+        tip: "🔑 Usa el impulso de las piernas para ayudar a subir las mancuernas." },
+      { name: "Remo + Curl + Press", sets: "3 series × 8 reps", rest: "75 seg descanso", muscle: "Espalda, bíceps, hombros",
+        how: "De pie, inclina el torso ~45° con mancuernas colgando. Haz un remo (sube los codos). Desde ahí, haz un curl (dobla los codos hacia los hombros). Luego un press (empuja hacia arriba). Baja todo y repite.",
+        tip: "🔑 Peso ligero aquí, son 3 ejercicios combinados y el agotamiento llega rápido." },
+      { name: "Sentadillas con Salto", sets: "3 series × 10 reps", rest: "60 seg descanso", muscle: "Piernas, glúteos, cardio",
+        how: "Haz una sentadilla normal y al subir, salta explosivamente. Al aterrizar, flexiona suavemente las rodillas y vuelve a bajar a la sentadilla.",
+        tip: "🔑 Aterriza suave con las rodillas dobladas, nunca en seco para no lastimarte." },
+      { name: "Mountain Climbers", sets: "3 series × 30 segundos", rest: "45 seg descanso", muscle: "Core, cardio, hombros",
+        how: "En posición de flexión, lleva alternadamente las rodillas hacia el pecho lo más rápido posible. Es como correr en el sitio pero en posición horizontal.",
+        tip: "🔑 Las caderas no deben subir y bajar. Mantenlas al nivel de los hombros." },
+    ]
+  },
+];
+
+const weekSchedule = [
+  { day: "Lun", active: true,  idx: 0 },
+  { day: "Mar", active: true,  idx: 1 },
+  { day: "Mié", active: false, idx: null },
+  { day: "Jue", active: true,  idx: 2 },
+  { day: "Vie", active: true,  idx: 3 },
+  { day: "Sáb", active: true,  idx: 4 },
+  { day: "Dom", active: false, idx: null },
+];
+
+// State
+let selectedDay = 0;
+let expandedEx = null;
+const completedSets = {};
+
+function getSetCount(setsStr) {
+  const m = setsStr.match(/(\d+)\s*series/);
+  return m ? parseInt(m[1]) : 3;
+}
+
+function isSetDone(dayIdx, exIdx, setIdx) {
+  return !!completedSets[`${dayIdx}-${exIdx}-${setIdx}`];
+}
+
+function isExDone(dayIdx, exIdx) {
+  const count = getSetCount(days[dayIdx].exercises[exIdx].sets);
+  for (let i = 0; i < count; i++) {
+    if (!isSetDone(dayIdx, exIdx, i)) return false;
+  }
+  return true;
+}
+
+function renderHeader() {
+  const d = days[selectedDay];
+  document.getElementById('header-title').textContent = d.emoji + ' ' + d.focus;
+  document.getElementById('header-sub').textContent = d.exercises.length + ' ejercicios · ' + d.name;
+  // tip arrows color
+  ['ta1','ta2','ta3','ta4','ta5'].forEach(id => {
+    document.getElementById(id).style.color = d.color;
+  });
+}
+
+function renderWeekNav() {
+  const nav = document.getElementById('week-nav');
+  nav.innerHTML = '';
+  weekSchedule.forEach((w, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'day-btn' + (w.active ? '' : ' rest');
+    const d = w.active ? days[w.idx] : null;
+    const isSelected = w.active && w.idx === selectedDay;
+
+    btn.style.border = isSelected
+      ? `2px solid ${d.color}`
+      : '2px solid #ffffff10';
+    btn.style.background = isSelected
+      ? d.color + '22'
+      : (w.active ? '#ffffff08' : 'transparent');
+
+    btn.innerHTML = `<div class="day-name">${w.day}</div>` + (
+      w.active
+        ? `<div class="day-dot" style="background:${d.color}"></div>`
+        : `<div class="day-rest-label">REST</div>`
+    );
+
+    if (w.active) {
+      btn.addEventListener('click', () => {
+        selectedDay = w.idx;
+        expandedEx = null;
+        render();
+      });
+    }
+    nav.appendChild(btn);
+  });
+}
+
+function renderExercises() {
+  const list = document.getElementById('exercise-list');
+  list.innerHTML = '';
+  const d = days[selectedDay];
+
+  d.exercises.forEach((ex, exIdx) => {
+    const done = isExDone(selectedDay, exIdx);
+    const isOpen = expandedEx === exIdx;
+    const setCount = getSetCount(ex.sets);
+
+    const card = document.createElement('div');
+    card.className = 'ex-card' + (done ? ' done' : '');
+    card.style.background = done ? `${d.color}18` : '#141414';
+    card.style.border = `1px solid ${done ? d.color + '55' : '#ffffff0f'}`;
+
+    // Header button
+    const header = document.createElement('button');
+    header.className = 'ex-header';
+    header.innerHTML = `
+      <div class="ex-num" style="background:${done ? d.color : d.color+'22'};color:${done ? '#000' : d.color}">
+        ${done ? '✓' : exIdx + 1}
+      </div>
+      <div class="ex-info">
+        <div class="ex-name" style="color:${done ? d.color : '#f0f0f0'}">${ex.name}</div>
+        <div class="ex-sets">${ex.sets}</div>
+      </div>
+      <span class="ex-arrow ${isOpen ? 'open' : ''}">⌄</span>
+    `;
+    header.addEventListener('click', () => {
+      expandedEx = isOpen ? null : exIdx;
+      renderExercises();
+    });
+    card.appendChild(header);
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'ex-body' + (isOpen ? ' open' : '');
+
+    // Sets buttons HTML
+    let setsHTML = '';
+    for (let s = 0; s < setCount; s++) {
+      const sd = isSetDone(selectedDay, exIdx, s);
+      setsHTML += `<button class="set-btn ${sd ? 'done-set' : ''}"
+        style="border-color:${sd ? d.color : '#333'};background:${sd ? d.color : 'transparent'};color:${sd ? '#000' : '#555'}"
+        data-ex="${exIdx}" data-set="${s}">
+        ${sd ? '✓' : 'Serie ' + (s + 1)}
+      </button>`;
+    }
+
+    body.innerHTML = `
+      <div class="muscle-tag" style="background:${d.color}22;color:${d.color}">${ex.muscle}</div>
+      <p class="section-label">CÓMO HACERLO</p>
+      <p class="how-text">${ex.how}</p>
+      <div class="tip-box">${ex.tip}</div>
+      <p class="section-label">MARCAR SERIES COMPLETADAS</p>
+      <div class="sets-row">${setsHTML}</div>
+      <div class="rest-pill">⏱ ${ex.rest}</div>
+    `;
+
+    // Set button events
+    body.querySelectorAll('.set-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ei = parseInt(btn.dataset.ex);
+        const si = parseInt(btn.dataset.set);
+        const key = `${selectedDay}-${ei}-${si}`;
+        completedSets[key] = !completedSets[key];
+        renderExercises();
+      });
+    });
+
+    card.appendChild(body);
+    list.appendChild(card);
+  });
+}
+
+function render() {
+  renderHeader();
+  renderWeekNav();
+  renderExercises();
+}
+
+render();
+</script>
+</body>
+</html>
