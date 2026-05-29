@@ -8,7 +8,7 @@
   <title>Rutina Muscular en Casa 💪</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
     body {
       min-height: 100vh;
       background: #0a0a0a;
@@ -16,7 +16,7 @@
       color: #f0f0f0;
       padding-bottom: 2rem;
     }
-
+ 
     /* HEADER */
     #header {
       position: sticky;
@@ -42,7 +42,7 @@
       margin-bottom: 2px;
     }
     #header-sub { font-size: 12px; color: #777; }
-
+ 
     /* WEEK NAV */
     #week-nav {
       max-width: 600px;
@@ -69,7 +69,7 @@
     .day-btn.rest .day-name { color: #333; }
     .day-dot { width: 6px; height: 6px; border-radius: 50%; margin: 0 auto; }
     .day-rest-label { font-size: 8px; color: #333; }
-
+ 
     /* EXERCISE LIST */
     #exercise-list {
       max-width: 600px;
@@ -79,7 +79,7 @@
       flex-direction: column;
       gap: 10px;
     }
-
+ 
     /* EXERCISE CARD */
     .ex-card {
       background: #141414;
@@ -89,7 +89,7 @@
       transition: background 0.3s, border-color 0.3s;
     }
     .ex-card.done { }
-
+ 
     .ex-header {
       width: 100%;
       padding: 16px;
@@ -115,11 +115,11 @@
     .ex-sets { font-size: 12px; color: #666; }
     .ex-arrow { color: #444; font-size: 18px; transition: transform 0.3s; display: inline-block; }
     .ex-arrow.open { transform: rotate(180deg); }
-
+ 
     /* EXPANDED CONTENT */
     .ex-body { padding: 0 16px 16px; display: none; }
     .ex-body.open { display: block; }
-
+ 
     .muscle-tag {
       display: inline-block;
       font-size: 11px; font-weight: 600;
@@ -132,7 +132,7 @@
       font-weight: 600; margin-bottom: 4px;
     }
     .how-text { font-size: 14px; color: #ccc; line-height: 1.6; margin-bottom: 12px; }
-
+ 
     .tip-box {
       background: #1a1a1a;
       border: 1px solid #ffffff08;
@@ -141,7 +141,7 @@
       margin-bottom: 16px;
       font-size: 13px; color: #bbb; line-height: 1.5;
     }
-
+ 
     .sets-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
     .set-btn {
       padding: 8px 16px; border-radius: 8px;
@@ -151,7 +151,7 @@
       cursor: pointer; transition: all 0.2s;
     }
     .set-btn.done-set { color: #000; }
-
+ 
     .rest-pill {
       margin-top: 12px;
       padding: 8px 12px;
@@ -159,7 +159,7 @@
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 12px; color: #777;
     }
-
+ 
     /* TIPS CARD */
     #tips-card {
       max-width: 600px; margin: 10px auto 0;
@@ -179,7 +179,7 @@
   </style>
 </head>
 <body>
-
+ 
 <!-- HEADER -->
 <div id="header">
   <div id="header-inner">
@@ -188,13 +188,13 @@
     <p id="header-sub"></p>
   </div>
 </div>
-
+ 
 <!-- WEEK NAV -->
 <div id="week-nav"></div>
-
+ 
 <!-- EXERCISE LIST -->
 <div id="exercise-list"></div>
-
+ 
 <!-- TIPS -->
 <div id="tips-card">
   <div class="tips-inner">
@@ -206,7 +206,7 @@
     <p class="tip-line"><span class="tip-arrow" id="ta5">→</span>Miércoles y Domingo son de descanso activo (camina, estira)</p>
   </div>
 </div>
-
+ 
 <script>
 const days = [
   {
@@ -310,31 +310,31 @@ const days = [
     ]
   },
 ];
-
+ 
 const weekSchedule = [
   { day: "Lun", active: true,  idx: 0 },
   { day: "Mar", active: true,  idx: 1 },
-  { day: "Mié", active: false, idx: null },
-  { day: "Jue", active: true,  idx: 2 },
-  { day: "Vie", active: true,  idx: 3 },
+  { day: "Mié", active: true,  idx: 2 },
+  { day: "Jue", active: true,  idx: 3 },
+  { day: "Vie", active: false, idx: null },
   { day: "Sáb", active: true,  idx: 4 },
   { day: "Dom", active: false, idx: null },
 ];
-
+ 
 // State
 let selectedDay = 0;
 let expandedEx = null;
 const completedSets = {};
-
+ 
 function getSetCount(setsStr) {
   const m = setsStr.match(/(\d+)\s*series/);
   return m ? parseInt(m[1]) : 3;
 }
-
+ 
 function isSetDone(dayIdx, exIdx, setIdx) {
   return !!completedSets[`${dayIdx}-${exIdx}-${setIdx}`];
 }
-
+ 
 function isExDone(dayIdx, exIdx) {
   const count = getSetCount(days[dayIdx].exercises[exIdx].sets);
   for (let i = 0; i < count; i++) {
@@ -342,7 +342,7 @@ function isExDone(dayIdx, exIdx) {
   }
   return true;
 }
-
+ 
 function renderHeader() {
   const d = days[selectedDay];
   document.getElementById('header-title').textContent = d.emoji + ' ' + d.focus;
@@ -352,7 +352,7 @@ function renderHeader() {
     document.getElementById(id).style.color = d.color;
   });
 }
-
+ 
 function renderWeekNav() {
   const nav = document.getElementById('week-nav');
   nav.innerHTML = '';
@@ -361,20 +361,20 @@ function renderWeekNav() {
     btn.className = 'day-btn' + (w.active ? '' : ' rest');
     const d = w.active ? days[w.idx] : null;
     const isSelected = w.active && w.idx === selectedDay;
-
+ 
     btn.style.border = isSelected
       ? `2px solid ${d.color}`
       : '2px solid #ffffff10';
     btn.style.background = isSelected
       ? d.color + '22'
       : (w.active ? '#ffffff08' : 'transparent');
-
+ 
     btn.innerHTML = `<div class="day-name">${w.day}</div>` + (
       w.active
         ? `<div class="day-dot" style="background:${d.color}"></div>`
         : `<div class="day-rest-label">REST</div>`
     );
-
+ 
     if (w.active) {
       btn.addEventListener('click', () => {
         selectedDay = w.idx;
@@ -385,22 +385,22 @@ function renderWeekNav() {
     nav.appendChild(btn);
   });
 }
-
+ 
 function renderExercises() {
   const list = document.getElementById('exercise-list');
   list.innerHTML = '';
   const d = days[selectedDay];
-
+ 
   d.exercises.forEach((ex, exIdx) => {
     const done = isExDone(selectedDay, exIdx);
     const isOpen = expandedEx === exIdx;
     const setCount = getSetCount(ex.sets);
-
+ 
     const card = document.createElement('div');
     card.className = 'ex-card' + (done ? ' done' : '');
     card.style.background = done ? `${d.color}18` : '#141414';
     card.style.border = `1px solid ${done ? d.color + '55' : '#ffffff0f'}`;
-
+ 
     // Header button
     const header = document.createElement('button');
     header.className = 'ex-header';
@@ -419,11 +419,11 @@ function renderExercises() {
       renderExercises();
     });
     card.appendChild(header);
-
+ 
     // Body
     const body = document.createElement('div');
     body.className = 'ex-body' + (isOpen ? ' open' : '');
-
+ 
     // Sets buttons HTML
     let setsHTML = '';
     for (let s = 0; s < setCount; s++) {
@@ -434,7 +434,7 @@ function renderExercises() {
         ${sd ? '✓' : 'Serie ' + (s + 1)}
       </button>`;
     }
-
+ 
     body.innerHTML = `
       <div class="muscle-tag" style="background:${d.color}22;color:${d.color}">${ex.muscle}</div>
       <p class="section-label">CÓMO HACERLO</p>
@@ -444,7 +444,7 @@ function renderExercises() {
       <div class="sets-row">${setsHTML}</div>
       <div class="rest-pill">⏱ ${ex.rest}</div>
     `;
-
+ 
     // Set button events
     body.querySelectorAll('.set-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -455,18 +455,18 @@ function renderExercises() {
         renderExercises();
       });
     });
-
+ 
     card.appendChild(body);
     list.appendChild(card);
   });
 }
-
+ 
 function render() {
   renderHeader();
   renderWeekNav();
   renderExercises();
 }
-
+ 
 render();
 </script>
 </body>
