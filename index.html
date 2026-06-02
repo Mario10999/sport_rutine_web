@@ -1,3 +1,6 @@
+Aquí tienes el código completo modificado con los cambios que me pediste. He sustituido los ejercicios del **Día 2 (Espalda & Bíceps)** y he modificado el **Día 1 (Pecho & Tríceps)** eliminando las aperturas en el suelo e integrando las flexiones diamante.
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -218,9 +221,9 @@ const days = [
       { name: "Press con Mancuernas (Suelo)", sets: "4 series × 10-12 reps", rest: "75 seg descanso", muscle: "Pecho, tríceps",
         how: "Túmbate boca arriba en el suelo con las rodillas dobladas. Sostén una mancuerna en cada mano a la altura del pecho, codos a 45°. Empuja las mancuernas hacia arriba hasta estirar los brazos, luego baja despacio.",
         tip: "🔑 Baja lento (2-3 segundos) para trabajar más el músculo." },
-      { name: "Apertura con Mancuernas (Fly)", sets: "3 series × 12 reps", rest: "60 seg descanso", muscle: "Pecho interior",
-        how: "Mismo punto de partida que el press. Abre los brazos a los lados con los codos ligeramente doblados (como si abrazaras un árbol gigante), luego ciérralos arriba juntando las mancuernas. Siente el estiramiento en el pecho.",
-        tip: "🔑 Usa menos peso que en el press. El control importa más que la carga." },
+      { name: "Flexiones Diamante", sets: "3 series × 8-12 reps", rest: "60 seg descanso", muscle: "Pecho interno, tríceps",
+        how: "Ponte en posición de flexión pero junta tus manos abajo del pecho, tocando tus dedos índices y pulgares formando la silueta de un diamante o triángulo. Baja de forma controlada llevando el pecho hacia tus manos y empuja con fuerza.",
+        tip: "🔑 Si te cuesta mantener la postura correcta, puedes apoyar las rodillas en el suelo." },
       { name: "Extensiones de Tríceps con Mancuerna", sets: "3 series × 12-15 reps", rest: "60 seg descanso", muscle: "Tríceps",
         how: "De pie o sentado, sostén UNA mancuerna con ambas manos por encima de la cabeza. Dobla los codos bajando la mancuerna por detrás de la cabeza, luego estira los brazos hacia arriba. El codo no debe moverse.",
         tip: "🔑 Mantén los codos pegados a la cabeza para aislar el tríceps." },
@@ -232,21 +235,27 @@ const days = [
   {
     name: "Día 2", focus: "Espalda & Bíceps", color: "#4ECDC4", emoji: "🦾",
     exercises: [
-      { name: "Remo con Mancuerna (1 brazo)", sets: "4 series × 10-12 reps cada lado", rest: "60 seg descanso", muscle: "Espalda, bíceps",
-        how: "Apoya una rodilla y una mano en una silla o cama. Con la otra mano sostén la mancuerna colgando. Tira del codo hacia arriba y hacia atrás como si quisieras meter la mano al bolsillo. La espalda debe estar paralela al suelo.",
-        tip: "🔑 Piensa en 'jalar con el codo', no con la mano. Así trabajas la espalda." },
-      { name: "Superman", sets: "3 series × 15 reps", rest: "45 seg descanso", muscle: "Espalda baja, glúteos",
-        how: "Túmbate boca abajo con los brazos estirados al frente. Levanta simultáneamente brazos, pecho y piernas del suelo como si volaras. Mantén 2 segundos arriba y baja despacio.",
-        tip: "🔑 No fuerces el cuello. Mira al suelo, no al frente." },
-      { name: "Curl de Bíceps con Mancuernas", sets: "4 series × 10-12 reps", rest: "60 seg descanso", muscle: "Bíceps",
-        how: "De pie, sostén una mancuerna en cada mano con las palmas mirando al frente. Dobla los codos subiendo las mancuernas hacia los hombros. Baja despacio sin dejar caer los brazos del todo.",
-        tip: "🔑 No balancees el torso. Si lo haces, el peso es demasiado heavy." },
-      { name: "Curl Martillo", sets: "3 series × 12 reps", rest: "60 seg descanso", muscle: "Bíceps, antebrazo",
-        how: "Igual que el curl normal pero las palmas miran hacia dentro (como si sostuvieras un martillo). Este agarre trabaja más el antebrazo y la parte exterior del bíceps.",
-        tip: "🔑 Alterna brazos para mayor control y concentración." },
-      { name: "Remo Invertido con Mesa", sets: "3 series × 10-12 reps", rest: "60 seg descanso", muscle: "Espalda alta, bíceps",
-        how: "Túmbate bajo una mesa resistente, agarra el borde con ambas manos. El cuerpo queda como una tabla inclinada. Jala el pecho hacia la mesa doblando los codos. Es como una dominada pero horizontal.",
-        tip: "🔑 Asegúrate de que la mesa es estable antes de empezar." },
+      { name: "Dominadas al fallo", sets: "4 series al fallo", rest: "90 seg descanso", muscle: "Espalda (Dorsales), bíceps",
+        how: "Cuélgate de una barra con agarre prono (palmas hacia el frente) un poco más ancho que tus hombros. Tira de tu cuerpo hacia arriba llevando el pecho hacia la barra y pasando la barbilla. Baja de forma controlada hasta estirar los brazos.",
+        tip: "🔑 Haz todas las repeticiones que puedas de forma estricta en cada serie hasta que no puedas más." },
+      { name: "Remo Unilateral", sets: "4 series (por lado) al fallo o RIR 1", rest: "75 seg descanso", muscle: "Espalda alta, dorsales, bíceps",
+        how: "Apoya una rodilla y una mano del mismo lado en un banco o silla estable. Mantén la espalda recta y paralela al suelo. Con la otra mano, jala la mancuerna hacia tu cadera llevando el codo hacia atrás. Ve al fallo o a 1 repetición de completarlo.",
+        tip: "🔑 Concéntrate en la conexión mente-músculo tirando desde el codo y no con el bíceps." },
+      { name: "Pájaros Invertidos", sets: "4 series × 12-15 reps", rest: "60 seg descanso", muscle: "Deltoides posterior (hombro posterior)",
+        how: "Flexiona ligeramente las rodillas e inclina el torso hacia adelante casi paralelo al suelo con la espalda recta. Con las mancuernas colgando y codos semiflexionados, eleva los brazos hacia los lados como si abrieras unas alas. (Búscalo en YouTube como 'Pájaros invertidos con mancuernas' para ver la técnica perfecta).",
+        tip: "🔑 Evita dar tirones con el torso, mantén el cuerpo inmóvil y mueve solo los brazos." },
+      { name: "Encogimiento de Hombros (Opcional)", sets: "3 series × 12-15 reps", rest: "60 seg descanso", muscle: "Trapecios",
+        how: "De pie, con una mancuerna en cada mano a los costados del cuerpo. Eleva los hombros en línea recta hacia las orejas lo más alto posible sin doblar los codos. Aguanta un segundo arriba y baja despacio. (Búscalo en YT para asegurar la línea de empuje).",
+        tip: "🔑 Este ejercicio es opcional pero suma mucho para desarrollar la zona superior de la espalda." },
+      { name: "Curl de Bíceps Controlado", sets: "2 series al fallo", rest: "60 seg descanso", muscle: "Bíceps",
+        how: "De pie, con mancuernas a los lados y palmas al frente. Sube el peso doblando los codos sin balancear el cuerpo. Haz el movimiento muy controlado, poco a poco, tanto al subir como al bajar. Ve al fallo total.",
+        tip: "🔑 Controlar el tempo de bajada (fase excéntrica) maximiza el estímulo muscular." },
+      { name: "Curl Martillo al fallo", sets: "1 serie al fallo", rest: "45 seg descanso", muscle: "Bíceps, braquiorradial",
+        how: "Sostén las mancuernas con las palmas mirándose entre sí (agarre neutro). Sube y baja con control estricto. Al ser una sola serie, dalo absolutamente todo hasta que el músculo no responda.",
+        tip: "🔑 Mantén los codos fijos a los costados del torso, no los eches hacia adelante." },
+      { name: "Supermans (Opcional)", sets: "3 series × 15 reps", rest: "45 seg descanso", muscle: "Espalda baja, glúteos",
+        how: "Túmbate boca abajo con los brazos estirados al frente. Levanta simultáneamente brazos, pecho y piernas del suelo. Hazlos si quieres complementar el trabajo lumbar de la sesión.",
+        tip: "🔑 No hiperextiendas bruscamente el cuello; mantén la mirada hacia el suelo." }
     ]
   },
   {
@@ -471,3 +480,5 @@ render();
 </script>
 </body>
 </html>
+
+```
